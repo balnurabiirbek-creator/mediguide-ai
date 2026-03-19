@@ -21,7 +21,7 @@ class EmergencyScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Emergency Center'),
+        title: Text(context.dynamicText('Emergency Center')),
         backgroundColor: AppColors.background,
       ),
       body: SingleChildScrollView(
@@ -50,12 +50,12 @@ class EmergencyScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 14),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Emergency help, instantly',
+                              context.dynamicText('Emergency help, instantly'),
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white,
@@ -65,7 +65,9 @@ class EmergencyScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              'Call an ambulance, open the nearest emergency hospital, and review critical first actions.',
+                              context.dynamicText(
+                                'Call an ambulance, open the nearest emergency hospital, and review critical first actions.',
+                              ),
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white70,
@@ -80,7 +82,7 @@ class EmergencyScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   PrimaryButton(
-                    label: 'Call ambulance 112',
+                    label: context.dynamicText('Call ambulance 112'),
                     onTap: () => _launchUri(Uri(scheme: 'tel', path: '112')),
                     icon: Icons.call_rounded,
                     color: Colors.white.withValues(alpha: 0.2),
@@ -93,30 +95,35 @@ class EmergencyScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Triage advice',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Triage advice'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
                   _EmergencyStep(
                     icon: Icons.warning_amber_rounded,
-                    title: 'Call emergency help first',
-                    subtitle:
-                        'If there is chest pain, breathing trouble, severe bleeding, or loss of consciousness, call 112 immediately.',
+                    title: context.dynamicText('Call emergency help first'),
+                    subtitle: context.dynamicText(
+                      'If there is chest pain, breathing trouble, severe bleeding, or loss of consciousness, call 112 immediately.',
+                    ),
                     accent: AppColors.danger,
                   ),
                   const SizedBox(height: 12),
                   _EmergencyStep(
                     icon: Icons.location_on_rounded,
-                    title: 'Open nearby emergency care',
-                    subtitle:
-                        'Use the closest hospital below if you need urgent in-person treatment.',
+                    title: context.dynamicText('Open nearby emergency care'),
+                    subtitle: context.dynamicText(
+                      'Use the closest hospital below if you need urgent in-person treatment.',
+                    ),
                     accent: AppColors.primary,
                   ),
                   const SizedBox(height: 12),
                   _EmergencyStep(
                     icon: Icons.description_outlined,
-                    title: 'Keep essential info ready',
-                    subtitle:
-                        'Prepare allergy notes, medicine list, and emergency contact details.',
+                    title: context.dynamicText('Keep essential info ready'),
+                    subtitle: context.dynamicText(
+                      'Prepare allergy notes, medicine list, and emergency contact details.',
+                    ),
                     accent: AppColors.warning,
                   ),
                 ],
@@ -148,10 +155,12 @@ class EmergencyScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Emergency checklist',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Emergency checklist'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
-                  ...const [
+                  ...[
                     'Share your exact location.',
                     'Do not drive yourself if symptoms are severe.',
                     'Keep the phone line open after calling emergency services.',
@@ -169,7 +178,10 @@ class EmergencyScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 8),
                           Expanded(
-                            child: Text(item, style: AppTextStyles.bodySmall),
+                            child: Text(
+                              context.dynamicText(item),
+                              style: AppTextStyles.bodySmall,
+                            ),
                           ),
                         ],
                       ),

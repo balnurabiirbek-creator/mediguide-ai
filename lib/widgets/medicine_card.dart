@@ -76,7 +76,7 @@ class MedicineCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                medicine.name,
+                                context.dynamicText(medicine.name),
                                 style: AppTextStyles.headlineSmall.copyWith(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w800,
@@ -84,7 +84,7 @@ class MedicineCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                medicine.genericName,
+                                context.dynamicText(medicine.genericName),
                                 style: AppTextStyles.bodySmall,
                               ),
                             ],

@@ -72,7 +72,7 @@ ${context.tr('medicalEducationDisclaimer')}
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.background,
-        title: Text(medicine.name),
+        title: Text(context.dynamicText(medicine.name)),
         actions: [
           IconButton(
             tooltip: context.tr('shareMedicine'),
@@ -161,7 +161,7 @@ ${context.tr('medicalEducationDisclaimer')}
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    medicine.name,
+                                    context.dynamicText(medicine.name),
                                     style: AppTextStyles.displayMedium.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w900,
@@ -169,7 +169,7 @@ ${context.tr('medicalEducationDisclaimer')}
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    medicine.genericName,
+                                    context.dynamicText(medicine.genericName),
                                     style: AppTextStyles.bodyMedium.copyWith(
                                       color: Colors.white.withValues(
                                         alpha: 0.86,
@@ -195,7 +195,7 @@ ${context.tr('medicalEducationDisclaimer')}
                                   : context.tr('nonPrescription'),
                             ),
                             _InfoPill(
-                              label: medicine.manufacturer,
+                              label: context.dynamicText(medicine.manufacturer),
                             ),
                           ],
                         ),

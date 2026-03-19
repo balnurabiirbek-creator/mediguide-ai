@@ -18,7 +18,7 @@ class HealthTrackerScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Health Tracker'),
+        title: Text(context.dynamicText('Health Tracker')),
         backgroundColor: AppColors.background,
       ),
       body: SingleChildScrollView(
@@ -47,12 +47,12 @@ class HealthTrackerScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 14),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Your health snapshot',
+                              context.dynamicText('Your health snapshot'),
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white,
@@ -62,7 +62,9 @@ class HealthTrackerScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              'Track recent checks, personal indicators, and follow-up actions in one place.',
+                              context.dynamicText(
+                                'Track recent checks, personal indicators, and follow-up actions in one place.',
+                              ),
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white70,
@@ -84,7 +86,7 @@ class HealthTrackerScreen extends StatelessWidget {
                 Expanded(
                   child: _TrackerMetricCard(
                     icon: Icons.history_rounded,
-                    label: 'Recent checks',
+                    label: context.dynamicText('Recent checks'),
                     value: '${activities.length}',
                     accent: AppColors.primary,
                   ),
@@ -127,8 +129,10 @@ class HealthTrackerScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Health summary',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Health summary'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
                   Row(
                     children: [
@@ -168,30 +172,35 @@ class HealthTrackerScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Suggested next steps',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Suggested next steps'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
                   _TrackerAdviceRow(
                     icon: Icons.biotech_rounded,
-                    title: 'Run an AI symptom check',
-                    subtitle:
-                        'Use the symptom checker when you feel something unusual.',
+                    title: context.dynamicText('Run an AI symptom check'),
+                    subtitle: context.dynamicText(
+                      'Use the symptom checker when you feel something unusual.',
+                    ),
                     accent: AppColors.primary,
                   ),
                   const SizedBox(height: 12),
                   _TrackerAdviceRow(
                     icon: Icons.local_hospital_rounded,
-                    title: 'Keep one hospital saved',
-                    subtitle:
-                        'Save a nearby clinic or hospital for faster access in urgent situations.',
+                    title: context.dynamicText('Keep one hospital saved'),
+                    subtitle: context.dynamicText(
+                      'Save a nearby clinic or hospital for faster access in urgent situations.',
+                    ),
                     accent: AppColors.success,
                   ),
                   const SizedBox(height: 12),
                   _TrackerAdviceRow(
                     icon: Icons.medication_rounded,
-                    title: 'Review medicine warnings',
-                    subtitle:
-                        'Check allergy notes before taking a new medicine.',
+                    title: context.dynamicText('Review medicine warnings'),
+                    subtitle: context.dynamicText(
+                      'Check allergy notes before taking a new medicine.',
+                    ),
                     accent: AppColors.warning,
                   ),
                 ],
@@ -202,14 +211,18 @@ class HealthTrackerScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Timeline', style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Timeline'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
                   if (activities.isEmpty)
                     EmptyState(
                       emoji: '📈',
-                      title: 'No tracker history yet',
-                      subtitle:
-                          'Start checking symptoms, medicines, or nearby hospitals to build your health timeline.',
+                      title: context.dynamicText('No tracker history yet'),
+                      subtitle: context.dynamicText(
+                        'Start checking symptoms, medicines, or nearby hospitals to build your health timeline.',
+                      ),
                     )
                   else
                     Column(

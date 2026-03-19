@@ -409,14 +409,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Care pages', style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Care pages'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 10),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.monitor_heart_rounded),
-                    title: const Text('Health Tracker'),
-                    subtitle: const Text(
-                      'Symptoms history, previous checks, and stats',
+                    title: Text(context.dynamicText('Health Tracker')),
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Symptoms history, previous checks, and stats',
+                      ),
                     ),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () => _openPage(const HealthTrackerScreen()),
@@ -427,9 +432,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Icons.emergency_rounded,
                       color: AppColors.danger,
                     ),
-                    title: const Text('Emergency Center'),
-                    subtitle: const Text(
-                      'Ambulance call, nearby urgent hospitals, and first actions',
+                    title: Text(context.dynamicText('Emergency Center')),
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Ambulance call, nearby urgent hospitals, and first actions',
+                      ),
                     ),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () => _openPage(const EmergencyScreen()),
@@ -438,8 +445,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.settings_rounded),
                     title: Text(context.tr('settings')),
-                    subtitle: const Text(
-                      'Language, theme, notifications, and privacy',
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Language, theme, notifications, and privacy',
+                      ),
                     ),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () => _openPage(const SettingsScreen()),
@@ -598,12 +607,12 @@ class _SavedPlacesSection extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                place.name,
+                                context.dynamicText(place.name),
                                 style: AppTextStyles.headlineSmall,
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                place.address,
+                                context.dynamicText(place.address),
                                 style: AppTextStyles.bodySmall,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

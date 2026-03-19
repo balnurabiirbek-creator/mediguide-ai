@@ -67,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SnackBar(
         content: Text(
           success
-              ? 'Verification email sent. Please check your inbox.'
+              ? context.tr('verificationEmailSent')
               : (auth.error ?? context.tr('authFailed')),
         ),
         backgroundColor: success ? AppColors.success : AppColors.danger,
@@ -88,8 +88,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Signed out successfully.'),
+      SnackBar(
+        content: Text(context.dynamicText('Signed out successfully.')),
         backgroundColor: AppColors.success,
       ),
     );
@@ -102,22 +102,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Delete account'),
-          content: const Text(
-            'This will remove your sign-in account from MediGuide AI on this device. '
-            'Firebase may ask you to sign in again before deletion.',
+          title: Text(context.dynamicText('Delete account')),
+          content: Text(
+            context.dynamicText(
+              'This will remove your sign-in account from MediGuide AI on this device. Firebase may ask you to sign in again before deletion.',
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: const Text('Cancel'),
+              child: Text(context.tr('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.danger,
               ),
-              child: const Text('Delete'),
+              child: Text(context.tr('delete')),
             ),
           ],
         );
@@ -134,7 +135,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SnackBar(
         content: Text(
           success
-              ? 'Account deleted successfully.'
+              ? context.dynamicText('Account deleted successfully.')
               : (auth.error ?? context.tr('authFailed')),
         ),
         backgroundColor: success ? AppColors.success : AppColors.danger,
@@ -146,15 +147,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
   }
 
-  String _activityTimeLabel(String? rawValue) {
+  String _activityTimeLabel(BuildContext context, String? rawValue) {
     final parsed = rawValue == null ? null : DateTime.tryParse(rawValue);
-    if (parsed == null) return 'Now';
+    if (parsed == null) return context.tr('now');
 
     final diff = DateTime.now().difference(parsed.toLocal());
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes} min ago';
-    if (diff.inHours < 24) return '${diff.inHours} h ago';
-    return '${diff.inDays} d ago';
+    if (diff.inMinutes < 1) return context.dynamicText('Just now');
+    if (diff.inMinutes < 60) {
+      return context.tr('minutesAgo', params: {'count': '${diff.inMinutes}'});
+    }
+    if (diff.inHours < 24) {
+      return context.tr('hoursAgo', params: {'count': '${diff.inHours}'});
+    }
+    return context.tr('daysAgo', params: {'count': '${diff.inDays}'});
   }
 
   @override
@@ -200,12 +205,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       const SizedBox(width: 14),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Control your app experience',
+                              context.dynamicText('Control your app experience'),
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white,
@@ -215,7 +220,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              'Language, appearance, privacy, and quick health preferences in one place.',
+                              context.dynamicText(
+                                'Language, appearance, privacy, and quick health preferences in one place.',
+                              ),
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 color: Colors.white70,
@@ -236,7 +243,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Appearance', style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Appearance'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 8),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -266,8 +276,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Row(
                     children: [
                       const Expanded(
-                        child: Text(
-                          'Notification history',
+                      child: Text(
+                          context.dynamicText('Notification history'),
                           style: AppTextStyles.headlineSmall,
                         ),
                       ),
@@ -280,8 +290,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 6),
                   if (activities.isEmpty)
-                    const Text(
-                      'Important health actions and reminders will appear here.',
+                    Text(
+                      context.dynamicText(
+                        'Important health actions and reminders will appear here.',
+                      ),
                       style: AppTextStyles.bodySmall,
                     )
                   else
@@ -324,19 +336,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      title.isEmpty ? 'Health update' : title,
+                                      context.dynamicText(
+                                        title.isEmpty ? 'Health update' : title,
+                                      ),
                                       style: AppTextStyles.headlineSmall,
                                     ),
                                     if (subtitle.isNotEmpty) ...[
                                       const SizedBox(height: 4),
                                       Text(
-                                        subtitle,
+                                        context.dynamicText(subtitle),
                                         style: AppTextStyles.bodySmall,
                                       ),
                                     ],
                                     const SizedBox(height: 6),
                                     Text(
                                       _activityTimeLabel(
+                                        context,
                                         activity['createdAt'] as String?,
                                       ),
                                       style: AppTextStyles.caption,
@@ -364,8 +379,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Smart toggles',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Smart toggles'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 10),
                   SwitchListTile.adaptive(
                     contentPadding: EdgeInsets.zero,
@@ -374,9 +391,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       setState(() => _notificationsEnabled = value);
                       _saveToggle(_notificationsKey, value);
                     },
-                    title: const Text('Notifications'),
-                    subtitle: const Text(
-                        'Medicine reminders and urgent health nudges'),
+                    title: Text(context.dynamicText('Notifications')),
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Medicine reminders and urgent health nudges',
+                      ),
+                    ),
                   ),
                   SwitchListTile.adaptive(
                     contentPadding: EdgeInsets.zero,
@@ -385,9 +405,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       setState(() => _privacyLockEnabled = value);
                       _saveToggle(_privacyLockKey, value);
                     },
-                    title: const Text('Privacy lock'),
-                    subtitle: const Text(
-                        'Require an extra confirmation for sensitive changes'),
+                    title: Text(context.dynamicText('Privacy lock')),
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Require an extra confirmation for sensitive changes',
+                      ),
+                    ),
                   ),
                   SwitchListTile.adaptive(
                     contentPadding: EdgeInsets.zero,
@@ -396,9 +419,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       setState(() => _offlineBriefsEnabled = value);
                       _saveToggle(_offlineBriefsKey, value);
                     },
-                    title: const Text('Offline summaries'),
-                    subtitle: const Text(
-                      'Keep essential care notes available when the network is weak',
+                    title: Text(context.dynamicText('Offline summaries')),
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Keep essential care notes available when the network is weak',
+                      ),
                     ),
                   ),
                 ],
@@ -409,15 +434,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Security and account',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Security and account'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
                   _SettingsInfoRow(
                     icon: Icons.verified_user_rounded,
-                    title: 'Session mode',
+                    title: context.dynamicText('Session mode'),
                     subtitle: appPrefs.isDemoMode
-                        ? 'Preview mode is currently active'
-                        : 'Signed account mode is active',
+                        ? context.dynamicText('Preview mode is currently active')
+                        : context.dynamicText('Signed account mode is active'),
                     accent: appPrefs.isDemoMode
                         ? AppColors.warning
                         : AppColors.success,
@@ -425,16 +452,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const SizedBox(height: 10),
                   _SettingsInfoRow(
                     icon: Icons.shield_outlined,
-                    title: 'Privacy',
-                    subtitle:
-                        'Health profile details stay separated from temporary preview content.',
+                    title: context.dynamicText('Privacy'),
+                    subtitle: context.dynamicText(
+                      'Health profile details stay separated from temporary preview content.',
+                    ),
                     accent: AppTheme.brandBlue,
                   ),
                   if (signedInEmail.isNotEmpty) ...[
                     const SizedBox(height: 10),
                     _SettingsInfoRow(
                       icon: Icons.alternate_email_rounded,
-                      title: 'Signed in as',
+                      title: context.dynamicText('Signed in as'),
                       subtitle: signedInEmail,
                       accent: AppColors.primary,
                     ),
@@ -444,9 +472,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     OutlinedButton.icon(
                       onPressed: auth.isLoading ? null : _resendVerification,
                       icon: const Icon(Icons.mark_email_unread_outlined),
-                      label: const Padding(
+                      label: Padding(
                         padding: EdgeInsets.symmetric(vertical: 14),
-                        child: Text('Resend verification email'),
+                        child: Text(context.tr('resendVerification')),
                       ),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(
@@ -464,15 +492,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Guided actions',
-                      style: AppTextStyles.headlineSmall),
+                  Text(
+                    context.dynamicText('Guided actions'),
+                    style: AppTextStyles.headlineSmall,
+                  ),
                   const SizedBox(height: 10),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.slideshow_rounded),
-                    title: const Text('Open onboarding'),
-                    subtitle: const Text(
-                      'Replay the welcome slides and app feature walkthrough',
+                    title: Text(context.dynamicText('Open onboarding')),
+                    subtitle: Text(
+                      context.dynamicText(
+                        'Replay the welcome slides and app feature walkthrough',
+                      ),
                     ),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: _openOnboardingPreview,
@@ -481,11 +513,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.logout_rounded),
                     title: Text(
-                        appPrefs.isDemoMode ? 'Exit preview mode' : 'Log out'),
+                      appPrefs.isDemoMode
+                          ? context.dynamicText('Exit preview mode')
+                          : context.dynamicText('Log out'),
+                    ),
                     subtitle: Text(
                       appPrefs.isDemoMode
-                          ? 'Return to the normal sign-in flow'
-                          : 'Sign out and return to onboarding or auth',
+                          ? context.dynamicText(
+                              'Return to the normal sign-in flow',
+                            )
+                          : context.dynamicText(
+                              'Sign out and return to onboarding or auth',
+                            ),
                     ),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: auth.isLoading ? null : _signOut,
@@ -501,23 +540,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Danger zone',
+                      context.dynamicText('Danger zone'),
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.danger,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Use this only if you want to remove your signed-in MediGuide account from this device.',
+                    Text(
+                      context.dynamicText(
+                        'Use this only if you want to remove your signed-in MediGuide account from this device.',
+                      ),
                       style: AppTextStyles.bodySmall,
                     ),
                     const SizedBox(height: 14),
                     OutlinedButton.icon(
                       onPressed: auth.isLoading ? null : _confirmDeleteAccount,
                       icon: const Icon(Icons.delete_forever_rounded),
-                      label: const Padding(
+                      label: Padding(
                         padding: EdgeInsets.symmetric(vertical: 14),
-                        child: Text('Delete account'),
+                        child: Text(context.dynamicText('Delete account')),
                       ),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.danger,

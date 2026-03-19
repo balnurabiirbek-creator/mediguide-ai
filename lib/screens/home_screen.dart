@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SectionHeader(title: 'MVP Pages'),
+                  SectionHeader(title: context.dynamicText('MVP Pages')),
                   const SizedBox(height: 12),
                   _buildPageLaunchpad(),
                   const SizedBox(height: 24),
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SectionHeader(title: 'Nearby Preview'),
+                  SectionHeader(title: context.dynamicText('Nearby Preview')),
                   const SizedBox(height: 12),
                   _buildNearbyPreview(userProvider),
                   const SizedBox(height: 24),
@@ -338,13 +338,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
       _QuickAction(
         emoji: '🚑',
-        label: 'Emergency\nCenter',
+        label: context.dynamicText('Emergency\nCenter'),
         color: AppColors.danger,
         onTap: () => _openPage(const EmergencyScreen()),
       ),
       _QuickAction(
         emoji: '📈',
-        label: 'Health\nTracker',
+        label: context.dynamicText('Health\nTracker'),
         color: const Color(0xFF0EA5E9),
         onTap: () => _openPage(const HealthTrackerScreen()),
       ),
@@ -381,8 +381,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Start from symptoms, medicine, or urgent care',
+          Text(
+            context.dynamicText('Start from symptoms, medicine, or urgent care'),
             style: AppTextStyles.headlineSmall,
           ),
           const SizedBox(height: 12),
@@ -390,7 +390,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             readOnly: true,
             onTap: () => widget.onNavigate(1),
             decoration: InputDecoration(
-              hintText: 'Describe your symptom to start an AI check',
+              hintText: context.dynamicText(
+                'Describe your symptom to start an AI check',
+              ),
               prefixIcon: const Icon(Icons.search_rounded),
               suffixIcon: IconButton(
                 onPressed: () => widget.onNavigate(1),
@@ -405,9 +407,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: OutlinedButton.icon(
                   onPressed: () => widget.onNavigate(1),
                   icon: const Icon(Icons.biotech_rounded),
-                  label: const Padding(
+                  label: Padding(
                     padding: EdgeInsets.symmetric(vertical: 12),
-                    child: Text('Check Symptoms'),
+                    child: Text(context.dynamicText('Check Symptoms')),
                   ),
                 ),
               ),
@@ -416,9 +418,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: OutlinedButton.icon(
                   onPressed: () => widget.onNavigate(2),
                   icon: const Icon(Icons.medication_rounded),
-                  label: const Padding(
+                  label: Padding(
                     padding: EdgeInsets.symmetric(vertical: 12),
-                    child: Text('Find Medicine'),
+                    child: Text(context.dynamicText('Find Medicine')),
                   ),
                 ),
               ),
@@ -432,22 +434,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget _buildPageLaunchpad() {
     final items = [
       (
-        'Emergency Center',
-        'Fast ambulance access and urgent actions',
+        context.dynamicText('Emergency Center'),
+        context.dynamicText('Fast ambulance access and urgent actions'),
         Icons.emergency_rounded,
         AppColors.danger,
         const EmergencyScreen(),
       ),
       (
-        'Health Tracker',
-        'History, summaries, and health timeline',
+        context.dynamicText('Health Tracker'),
+        context.dynamicText('History, summaries, and health timeline'),
         Icons.monitor_heart_rounded,
         const Color(0xFF0EA5E9),
         const HealthTrackerScreen(),
       ),
       (
-        'Settings',
-        'Language, theme, privacy, and preferences',
+        context.dynamicText('Settings'),
+        context.dynamicText('Language, theme, privacy, and preferences'),
         Icons.settings_rounded,
         const Color(0xFF7B5EA7),
         const SettingsScreen(),
@@ -513,8 +515,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Open nearby hospitals map',
+                  Text(
+                    context.dynamicText('Open nearby hospitals map'),
                     style: TextStyle(
                       fontFamily: 'Nunito',
                       color: Colors.white,
@@ -541,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 backgroundColor: Colors.white,
                 foregroundColor: AppColors.primary,
               ),
-              child: const Text('Open'),
+              child: Text(context.dynamicText('Open')),
             ),
           ],
         ),
@@ -581,7 +583,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Tap to open hospital detail page',
+                  context.dynamicText('Tap to open hospital detail page'),
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w700,
