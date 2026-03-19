@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "381853942853",
+    "project_id": "medguide-ai-73388",
+    "storage_bucket": "medguide-ai-73388.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381853942853:android:fabb6ee4c2d46d4bb90f2c",
+        "android_client_info": {
+          "package_name": "com.mediguide.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381853942853-iioenl1lvjgi4ql8nuigmb6bs46prqm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mediguide.ai",
+            "certificate_hash": "0e4c9e4e2aa3f40944eb38cc257e6a29734adab9"
+          }
+        },
+        {
+          "client_id": "381853942853-40ls9cqsel97qc5ao5nt2kt4sp6ptlfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA58pFRzG_q8o1OIluDBGjpECAgins95M4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381853942853-40ls9cqsel97qc5ao5nt2kt4sp6ptlfv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
